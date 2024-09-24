@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Label, TextInput, Button, Checkbox } from 'flowbite-react';
-import { useAuth } from '../context/AuthProvider';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Label, TextInput, Button, Checkbox } from "flowbite-react";
+import { useAuth } from "../context/AuthProvider";
+import { useFetchRickAndMorty } from "../hooks/useFetchRickAndMorty";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const auth = useAuth();
   
+  const { isPending, error, data } = useFetchRickAndMorty();
+  console.log(isPending);
+  console.log(error);
+  console.log(data);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     auth.login();
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
-  
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow dark:bg-gray-900">
-        <h3 className="text-xl font-medium text-gray-900 dark:text-white">Sign in to your account</h3>
+        <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+          Sign in to your account
+        </h3>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <div className="mb-2 block">
@@ -53,7 +59,10 @@ const LoginForm = () => {
               <Checkbox id="remember" />
               <Label htmlFor="remember">Remember me</Label>
             </div>
-            <a href="#" className="text-sm text-cyan-700 hover:underline dark:text-cyan-500">
+            <a
+              href="#"
+              className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
+            >
               Lost Password?
             </a>
           </div>
@@ -62,7 +71,10 @@ const LoginForm = () => {
           </div>
           <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
             Not registered?&nbsp;
-            <a href="#" className="text-cyan-700 hover:underline dark:text-cyan-500">
+            <a
+              href="#"
+              className="text-cyan-700 hover:underline dark:text-cyan-500"
+            >
               Create account
             </a>
           </div>
